@@ -1,26 +1,82 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
+import PlacesPage from "./pages/Places";
+import TrainsPage from "./pages/trains";
+import LoginPage from "./pages/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import HomePage from "./pages/HomePage"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/admin/places">
+          <PlacesPage />
+        </Route>
+        <Route path="/admin/trains">
+          <TrainsPage />
+        </Route>
+        <Route path="/login" render={(props) => <LoginPage {...props} />} />
+        <Route
+          path="/register"
+          render={(props) => <RegistrationPage {...props} />}
+        />
+        <Route
+        path="/home"
+        render={(props) => <HomePage {...props} />}
+      />
+
+        <PrivateRoute path="/protected">
+          <ProtectedPage />
+        </PrivateRoute>
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    fakeAuth.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    fakeAuth.isAuthenticated = false;
+    setTimeout(cb, 100);
+  },
+};
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        fakeAuth.isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+function ProtectedPage() {
+  return <h3>Protected</h3>;
+}
+
