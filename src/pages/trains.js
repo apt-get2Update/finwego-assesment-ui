@@ -17,7 +17,7 @@ export default class TrainsPage extends React.Component {
     },
   };
   componentDidMount = async () => {
-    const { data } = await axios.get("http://localhost:4000/api/place");
+    const { data } = await axios.get("https://finwego-assesment-api.herokuapp.com/api/place");
     this.setState({ places: data });
     this.getTrains();
   };
@@ -32,7 +32,7 @@ export default class TrainsPage extends React.Component {
   }
   async getTrains() {
     try {
-      const { data } = await axios.get("http://localhost:4000/api/train");
+      const { data } = await axios.get("https://finwego-assesment-api.herokuapp.com/api/train");
       console.log(data);
       this.setState({ list: data });
     } catch (error) {
@@ -49,12 +49,12 @@ export default class TrainsPage extends React.Component {
     event.preventDefault();
     if (this.state.train._id) {
       const { data } = await axios.put(
-        `http://localhost:4000/api/train/${this.state.train._id}`,
+        `https://finwego-assesment-api.herokuapp.com/api/train/${this.state.train._id}`,
         this.state.train
       );
     } else {
       const { data } = await axios.post(
-        `http://localhost:4000/api/train`,
+        `https://finwego-assesment-api.herokuapp.com/api/train`,
         this.state.train
       );
     }
@@ -66,7 +66,7 @@ export default class TrainsPage extends React.Component {
   }
   async deleteTrain(train) {
     const { data } = await axios.delete(
-      `http://localhost:4000/api/train/${train._id}`
+      `https://finwego-assesment-api.herokuapp.com/api/train/${train._id}`
     );
     this.getTrains();
   }

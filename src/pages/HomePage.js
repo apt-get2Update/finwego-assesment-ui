@@ -14,7 +14,7 @@ export default class HomePage extends React.Component {
   };
   async getPlaces() {
     try {
-      const { data } = await axios.get("http://localhost:4000/api/place");
+      const { data } = await axios.get("https://finwego-assesment-api.herokuapp.com/api/place");
       this.setState({ places: data });
     } catch (error) {
       console.log(error);
@@ -27,7 +27,7 @@ export default class HomePage extends React.Component {
     event.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/api/train?fromStationCode=${this.state.fromStationCode}&toStationCode=${this.state.toStationCode}`
+        `https://finwego-assesment-api.herokuapp.com/api/train?fromStationCode=${this.state.fromStationCode}&toStationCode=${this.state.toStationCode}`
       );
       this.setState({ trains: data });
     } catch (error) {
@@ -38,7 +38,7 @@ export default class HomePage extends React.Component {
     try {
       const AuthStr = "Bearer ".concat(localStorage.getItem("token"));
       const { data } = await axios.post(
-        "http://localhost:4000/api/booking/availablity",
+        "https://finwego-assesment-api.herokuapp.com/api/booking/availablity",
         {
           trainId: train._id,
           journyDate: this.state.journyDate,
@@ -55,7 +55,7 @@ export default class HomePage extends React.Component {
     try {
       const AuthStr = "Bearer ".concat(localStorage.getItem("token"));
       const { data } = await axios.post(
-        "http://localhost:4000/api/booking",
+        "https://finwego-assesment-api.herokuapp.com/api/booking",
 
         {
           trainId: train._id,
@@ -72,7 +72,7 @@ export default class HomePage extends React.Component {
   getBookedTickets = async () => {
     try {
       const AuthStr = "Bearer ".concat(localStorage.getItem("token"));
-      const { data } = await axios.get("http://localhost:4000/api/booking", {
+      const { data } = await axios.get("https://finwego-assesment-api.herokuapp.com/api/booking", {
         headers: { Authorization: AuthStr },
       });
       this.setState({ tickets: data });
@@ -85,7 +85,7 @@ export default class HomePage extends React.Component {
       const AuthStr = "Bearer ".concat(localStorage.getItem("token"));
       axios.put();
       const { data } = await axios.put(
-        `http://localhost:4000/api/booking/${ticket._id}`,
+        `https://finwego-assesment-api.herokuapp.com/api/booking/${ticket._id}`,
         {},
         {
           headers: { Authorization: AuthStr },

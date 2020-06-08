@@ -16,7 +16,7 @@ export default class PlacesPage extends React.Component {
     event.preventDefault();
     try {
       const { data } = await axios.post(
-        `http://localhost:4000/api/auth/register`,
+        `https://finwego-assesment-api.herokuapp.com/api/auth/register`,
         this.state
       );
       localStorage.setItem("token", data.token);

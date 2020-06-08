@@ -18,7 +18,7 @@ export default class PlacesPage extends React.Component {
   }
   async getPlaces() {
     try {
-      const { data } = await axios.get("http://localhost:4000/api/place");
+      const { data } = await axios.get("https://finwego-assesment-api.herokuapp.com/api/place");
       console.log(data);
       this.setState({ list: data });
     } catch (error) {
@@ -35,12 +35,12 @@ export default class PlacesPage extends React.Component {
     event.preventDefault();
     if (this.state.place._id) {
       const { data } = await axios.put(
-        `http://localhost:4000/api/place/${this.state.place._id}`,
+        `https://finwego-assesment-api.herokuapp.com/api/place/${this.state.place._id}`,
         this.state.place
       );
     } else {
       const { data } = await axios.post(
-        `http://localhost:4000/api/place`,
+        `https://finwego-assesment-api.herokuapp.com/api/place`,
         this.state.place
       );
     }
@@ -52,7 +52,7 @@ export default class PlacesPage extends React.Component {
   }
   async deletePlace(place) {
     const { data } = await axios.delete(
-      `http://localhost:4000/api/place/${place._id}`
+      `https://finwego-assesment-api.herokuapp.com/api/place/${place._id}`
     );
     this.getPlaces();
   }
